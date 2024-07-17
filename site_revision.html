@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Révision des Tables de Multiplication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        input {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: calc(100% - 22px);
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .error {
+            color: red;
+        }
+        .correct {
+            color: green;
+        }
+        @media (min-width: 600px) {
+            .container {
+                width: 80%;
+            }
+        }
+        @media (min-width: 768px) {
+            .container {
+                width: 60%;
+            }
+        }
+        @media (min-width: 992px) {
+            .container {
+                width: 50%;
+            }
+        }
+        @media (min-width: 1200px) {
+            .container {
+                width: 40%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Révision des Tables de Multiplication</h1>
+        <div id="question"></div>
+        <input type="number" id="answer" placeholder="Votre réponse">
+        <button onclick="checkAnswer()">Vérifier</button>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        let variable1, variable2, mult;
+
+        function generateQuestion() {
+            variable1 = Math.floor(Math.random() * 8) + 2;
+            variable2 = Math.floor(Math.random() * 8) + 2;
+            mult = variable1 * variable2;
+            document.getElementById("question").innerText = `Calculer : ${variable1} x ${variable2} = `;
+            document.getElementById("message").innerText = '';
+            document.getElementById("answer").value = '';
+            document.getElementById("answer").focus(); // Focus sur la case de réponse
+        }
+
+        function checkAnswer() {
+            const answer = parseInt(document.getElementById("answer").value);
+            const messageElement = document.getElementById("message");
+            if (answer === mult) {
+                messageElement.innerText = "Correct! Bien joué :)";
+                messageElement.classList.add("correct");
+                messageElement.classList.remove("error");
+                setTimeout(() => {
+                    messageElement.innerText = '';
+                    generateQuestion();
+                }, 1000);
+            } else {
+                messageElement.innerText = "Erreur, essaye encore :)";
+                messageElement.classList.add("error");
+                messageElement.classList.remove("correct");
+            }
+            document.getElementById("answer").focus(); // Focus sur la case de réponse
+        }
+
+        // Générer la première question au chargement de la page
+        generateQuestion();
+    </script>
+</body>
+</html>
